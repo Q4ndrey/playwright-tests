@@ -105,6 +105,7 @@ const elements: Elements[] = [
 ];
 
 const lightMods = ['light', 'dark'];
+let kurochka = 123;
 
 test.describe('тесты главной страницы', () => {
   test.beforeEach(async ({ page }) => {
