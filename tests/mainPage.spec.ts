@@ -104,6 +104,8 @@ const elements: Elements[] = [
   },
 ];
 
+const lightMods = ['light', 'dark'];
+
 test.describe('тесты главной страницы', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('https://playwright.dev/');
@@ -140,5 +142,13 @@ test.describe('тесты главной страницы', () => {
     await page.getByRole('button', { name: 'Switch between dark and light' }).click();
     await page.getByRole('button', { name: 'Switch between dark and light' }).click();
     await expect.soft(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+  lightMods.forEach((value) => {
+    test(`Проверка стилей активного ${value} мода`, async ({ page }) => {
+      await page.evaluate((value) => {
+        document.querySelector('html')?.setAttribute('data-theme', value);
+      }, value);
+      await expect(page).toHaveScreenshot(`pageWith${value}Mode.png`);
+    });
   });
 });
